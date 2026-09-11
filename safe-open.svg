@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 650" role="img" aria-labelledby="title desc">
+  <title id="title">خزنة مفتوحة</title>
+  <desc id="desc">خزنة معدنية زرقاء مفتوحة ومضيئة من الداخل</desc>
+  <defs>
+    <linearGradient id="body" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#385b7d"/><stop offset=".48" stop-color="#1b3654"/><stop offset="1" stop-color="#10243c"/></linearGradient>
+    <radialGradient id="inside"><stop stop-color="#b4ffe0"/><stop offset=".25" stop-color="#41d995"/><stop offset=".72" stop-color="#0d6d64"/><stop offset="1" stop-color="#092b38"/></radialGradient>
+    <linearGradient id="openDoor" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#5b84a4"/><stop offset="1" stop-color="#203c5b"/></linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="24" stdDeviation="20" flood-color="#000" flood-opacity=".4"/></filter>
+    <filter id="glow"><feGaussianBlur stdDeviation="8" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <g filter="url(#shadow)">
+    <rect x="78" y="78" width="644" height="495" rx="42" fill="url(#body)" stroke="#0a1829" stroke-width="18"/>
+    <rect x="137" y="126" width="530" height="401" rx="30" fill="#061923" stroke="#82b1cb" stroke-opacity=".55" stroke-width="10"/>
+    <rect x="169" y="158" width="466" height="337" rx="21" fill="url(#inside)" stroke="#173c55" stroke-width="9"/>
+    <path d="M201 466h402M215 204h370" stroke="#b4ffe0" stroke-opacity=".32" stroke-width="5"/>
+    <circle cx="400" cy="325" r="126" fill="none" stroke="#80ffd0" stroke-opacity=".75" stroke-width="7" stroke-dasharray="2 20" stroke-linecap="round" filter="url(#glow)"/>
+    <path d="M400 269v112M344 325h112" stroke="#d6ffed" stroke-width="14" stroke-linecap="round" filter="url(#glow)"/>
+    <circle cx="400" cy="325" r="20" fill="#d6ffed"/>
+    <g transform="translate(104,116) rotate(-18 0 190)">
+      <rect x="-10" y="0" width="175" height="405" rx="27" fill="url(#openDoor)" stroke="#0b2138" stroke-width="12"/>
+      <circle cx="77" cy="192" r="85" fill="#264b6b" stroke="#88b8d6" stroke-width="7"/>
+      <circle cx="77" cy="192" r="67" fill="none" stroke="#122c48" stroke-width="11" stroke-dasharray="2 15"/>
+      <circle cx="77" cy="192" r="15" fill="#43c5df"/>
+      <rect x="35" y="316" width="30" height="38" rx="6" fill="#d3973a"/>
+    </g>
+    <circle cx="126" cy="126" r="13" fill="#62dc9a" filter="url(#glow)"/><circle cx="674" cy="126" r="13" fill="#62dc9a" filter="url(#glow)"/>
+    <circle cx="126" cy="524" r="13" fill="#62dc9a" filter="url(#glow)"/><circle cx="674" cy="524" r="13" fill="#62dc9a" filter="url(#glow)"/>
+    <text x="400" y="112" text-anchor="middle" font-family="sans-serif" font-size="27" font-weight="700" fill="#b4ffe0" letter-spacing="4">OPEN</text>
+  </g>
+</svg>

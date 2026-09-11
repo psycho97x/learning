@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b1220">
+  <title>الخزنة السرية | بطل الرياضيات</title>
+  <style>
+    :root {
+      --bg: #0b1220;
+      --surface: #121d31;
+      --surface-2: #1b2a42;
+      --surface-3: #243753;
+      --text: #f4f7fb;
+      --muted: #b6c5d8;
+      --accent: #2d9cdb;
+      --accent-2: #25b6a9;
+      --accent-contrast: #06121e;
+      --success: #35c27b;
+      --danger: #ef6a5b;
+      --warning: #e39a3b;
+      --border: rgba(203, 222, 242, .2);
+      --shadow: 0 24px 60px rgba(0, 0, 0, .35);
+      --radius: 18px;
+      --font: "Tahoma", "Segoe UI", sans-serif;
+    }
+
+    body[data-theme="light"] {
+      --bg: #edf2f7;
+      --surface: #ffffff;
+      --surface-2: #e4ebf3;
+      --surface-3: #d4e0ed;
+      --text: #152235;
+      --muted: #4f6379;
+      --accent: #1269a8;
+      --accent-2: #087f79;
+      --accent-contrast: #ffffff;
+      --success: #087a49;
+      --danger: #bd4035;
+      --warning: #995d13;
+      --border: rgba(25, 49, 75, .18);
+      --shadow: 0 24px 60px rgba(38, 58, 82, .16);
+    }
+
+    body[data-theme="ocean"] {
+      --bg: #071c2d;
+      --surface: #0c2b43;
+      --surface-2: #123e5b;
+      --surface-3: #1a5272;
+      --accent: #36b4e5;
+      --accent-2: #13b7a6;
+      --accent-contrast: #03131d;
+      --border: rgba(145, 224, 246, .22);
+    }
+
+    body[data-theme="forest"] {
+      --bg: #0b211c;
+      --surface: #12352c;
+      --surface-2: #1b493b;
+      --surface-3: #28604b;
+      --accent: #46b879;
+      --accent-2: #20a7a1;
+      --accent-contrast: #06150f;
+      --border: rgba(170, 234, 196, .22);
+    }
+
+    body[data-theme="royal"] {
+      --bg: #15152c;
+      --surface: #222344;
+      --surface-2: #2d2f58;
+      --surface-3: #3b3e6d;
+      --accent: #6fb2ef;
+      --accent-2: #42c7ba;
+      --accent-contrast: #0d1320;
+      --border: rgba(194, 206, 255, .22);
+    }
+
+    body[data-font="cairo"] { --font: "Cairo", "Tahoma", sans-serif; }
+    body[data-font="tajawal"] { --font: "Tajawal", "Tahoma", sans-serif; }
+    body[data-font="kufi"] { --font: "Noto Kufi Arabic", "Tahoma", sans-serif; }
+    body[data-font="system"] { --font: "Segoe UI", Tahoma, sans-serif; }
+
+    * { box-sizing: border-box; }
+    html, body { min-height: 100%; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: radial-gradient(circle at 10% 0%, color-mix(in srgb, var(--accent) 13%, transparent), transparent 34%), var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      transition: background .25s ease, color .25s ease;
+    }
+    button, input, textarea, select { font: inherit; }
+    button { border: 0; }
+    .app-shell { width: min(1120px, calc(100% - 32px)); margin: 0 auto; padding: 28px 0 44px; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-bottom: 22px; }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand-mark { width: 48px; height: 48px; display: grid; place-items: center; border-radius: 14px; background: var(--accent); color: var(--accent-contrast); font-size: 25px; box-shadow: 0 8px 22px color-mix(in srgb, var(--accent) 28%, transparent); }
+    .brand h1 { font-size: clamp(20px, 3vw, 29px); margin: 0; line-height: 1.15; }
+    .brand p { margin: 4px 0 0; color: var(--muted); font-size: 13px; }
+    .toolbar { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+    .icon-btn, .secondary-btn, .primary-btn, .danger-btn { cursor: pointer; border-radius: 11px; padding: 10px 15px; color: var(--text); background: var(--surface-2); border: 1px solid var(--border); transition: transform .18s ease, background .18s ease, filter .18s ease; }
+    .icon-btn:hover, .secondary-btn:hover, .primary-btn:hover, .danger-btn:hover { filter: brightness(1.12); transform: translateY(-1px); }
+    .icon-btn:active, .secondary-btn:active, .primary-btn:active, .danger-btn:active { transform: translateY(1px); }
+    .primary-btn { background: var(--accent); color: var(--accent-contrast); font-weight: 800; }
+    .secondary-btn { background: transparent; }
+    .danger-btn { color: #fff; background: var(--danger); }
+    button:disabled { cursor: not-allowed; opacity: .48; transform: none !important; filter: none !important; }
+    .panel { background: color-mix(in srgb, var(--surface) 96%, transparent); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
+    .setup-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(310px, .85fr); gap: 20px; align-items: start; }
+    .panel-body { padding: clamp(20px, 4vw, 34px); }
+    .panel-title { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 18px; }
+    .panel-title h2 { margin: 0; font-size: clamp(19px, 3vw, 25px); }
+    .panel-title p { color: var(--muted); margin: 5px 0 0; font-size: 14px; }
+    .eyebrow { color: var(--accent); font-weight: 800; font-size: 13px; margin: 0 0 7px; }
+    .settings-section + .settings-section { margin-top: 28px; }
+    .settings-section h3 { font-size: 16px; margin: 0 0 11px; }
+    .theme-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+    .theme-option { cursor: pointer; text-align: start; color: var(--text); padding: 11px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface-2); display: flex; align-items: center; gap: 9px; transition: .18s ease; }
+    .theme-option:hover, .theme-option.selected { border-color: var(--accent); box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 25%, transparent); }
+    .theme-swatch { width: 31px; height: 31px; border-radius: 9px; flex: 0 0 auto; border: 2px solid rgba(255,255,255,.28); }
+    .swatch-dark { background: linear-gradient(135deg, #0b1220 55%, #2d9cdb 55%); }
+    .swatch-light { background: linear-gradient(135deg, #ffffff 55%, #1269a8 55%); border-color: rgba(0,0,0,.2); }
+    .swatch-ocean { background: linear-gradient(135deg, #071c2d 55%, #36b4e5 55%); }
+    .swatch-forest { background: linear-gradient(135deg, #0b211c 55%, #46b879 55%); }
+    .swatch-royal { background: linear-gradient(135deg, #15152c 55%, #6fb2ef 55%); }
+    .theme-option strong { display: block; font-size: 14px; }
+    .theme-option small { display: block; color: var(--muted); margin-top: 1px; }
+    label { display: block; color: var(--muted); font-size: 14px; margin-bottom: 6px; }
+    select, input, textarea { width: 100%; color: var(--text); background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 11px 12px; outline: 0; }
+    select:focus, input:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent); }
+    textarea { min-height: 124px; resize: vertical; line-height: 1.7; }
+    .challenge-list { display: grid; gap: 10px; max-height: 460px; overflow: auto; padding-inline-end: 3px; }
+    .challenge-card { display: flex; align-items: center; gap: 10px; padding: 13px; border-radius: 12px; border: 1px solid var(--border); background: var(--surface-2); cursor: pointer; transition: .18s ease; }
+    .challenge-card:hover, .challenge-card.selected { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 11%, var(--surface-2)); }
+    .challenge-card .card-info { flex: 1; min-width: 0; }
+    .challenge-card strong { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .challenge-card small { color: var(--muted); display: block; margin-top: 3px; }
+    .card-actions { display: flex; gap: 5px; }
+    .mini-btn { cursor: pointer; background: transparent; color: var(--muted); padding: 6px; border-radius: 7px; font-size: 16px; }
+    .mini-btn:hover { color: var(--text); background: var(--surface-3); }
+    .setup-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+    .empty-state { color: var(--muted); text-align: center; padding: 25px 10px; border: 1px dashed var(--border); border-radius: 12px; }
+    .editor { margin-top: 20px; border-top: 1px solid var(--border); padding-top: 20px; }
+    .editor-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; }
+    .editor-grid .wide { grid-column: 1 / -1; }
+    .editor-actions { display: flex; gap: 9px; margin-top: 13px; }
+    .hint { color: var(--muted); font-size: 12px; margin: 6px 0 0; }
+    .game-screen { display: none; }
+    .game-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 17px; }
+    .game-header h2 { margin: 0; font-size: clamp(22px, 4vw, 35px); }
+    .game-header p { color: var(--muted); margin: 6px 0 0; font-size: clamp(14px, 2vw, 17px); }
+    .game-tools { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+    .game-layout { display: grid; grid-template-columns: minmax(0, .95fr) minmax(310px, 1.05fr); gap: 20px; align-items: stretch; }
+    .clues-panel { padding: clamp(20px, 3vw, 30px); }
+    .clues-panel h3 { margin: 0 0 15px; font-size: 20px; color: var(--accent); }
+    .clues-panel ul { padding: 0 23px 0 0; margin: 0; line-height: 2; font-size: clamp(16px, 2vw, 20px); }
+    .clues-panel li::marker { color: var(--accent); font-weight: bold; }
+    .safe-panel { min-height: 540px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: clamp(19px, 3vw, 31px); overflow: hidden; position: relative; }
+    .safe-wrap { width: min(370px, 80vw); margin: 0 auto 19px; position: relative; perspective: 900px; }
+    .safe-art { position: relative; width: 100%; aspect-ratio: 800 / 650; transform-style: preserve-3d; }
+    .safe-art img { display: block; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; user-select: none; backface-visibility: hidden; transition: opacity .65s ease, transform .9s cubic-bezier(.2,.75,.2,1), filter .4s ease; filter: drop-shadow(0 18px 25px rgba(0,0,0,.35)); }
+    .safe-art .safe-open { opacity: 0; transform: rotateY(82deg) scale(.94); transform-origin: right center; }
+    .safe-art.is-open .safe-closed { opacity: 0; transform: rotateY(-88deg) scale(.94); transform-origin: right center; }
+    .safe-art.is-open .safe-open { opacity: 1; transform: rotateY(0) scale(1); filter: drop-shadow(0 0 24px color-mix(in srgb, var(--success) 70%, transparent)) drop-shadow(0 18px 25px rgba(0,0,0,.35)); }
+    .safe-art.failure { animation: safeShake .55s ease; }
+    .safe-art.failure img { filter: drop-shadow(0 0 14px color-mix(in srgb, var(--danger) 62%, transparent)) drop-shadow(0 18px 25px rgba(0,0,0,.35)); }
+    .display { width: min(360px, 100%); background: #07100f; color: #63e39a; border: 2px solid color-mix(in srgb, var(--accent) 45%, #445); border-radius: 10px; padding: 13px 10px; text-align: center; font-family: "Courier New", monospace; font-size: clamp(25px, 5vw, 38px); letter-spacing: clamp(4px, 1vw, 9px); direction: ltr; min-height: 61px; text-shadow: 0 0 12px rgba(99,227,154,.55); margin-bottom: 17px; }
+    .keypad { width: min(360px, 100%); display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; direction: ltr; }
+    .key { cursor: pointer; min-height: 57px; border-radius: 11px; border: 1px solid var(--border); color: var(--text); background: var(--surface-2); font-size: 23px; font-weight: 800; transition: .15s ease; }
+    .key:hover { background: var(--surface-3); transform: translateY(-1px); }
+    .key:active { transform: scale(.96); }
+    .key.clear { color: #fff; background: var(--danger); }
+    .key.enter { grid-column: span 2; color: var(--accent-contrast); background: var(--accent-2); font-size: 17px; }
+    .message { position: absolute; z-index: 4; top: 45%; left: 50%; width: min(90%, 600px); min-height: 32px; padding: 18px 22px; border: 2px solid var(--border); border-radius: 16px; background: color-mix(in srgb, var(--surface) 94%, transparent); box-shadow: 0 18px 45px rgba(0,0,0,.38); text-align: center; font-size: clamp(18px, 2.6vw, 30px); line-height: 1.55; font-weight: 800; margin: 0; opacity: 0; transform: translate(-50%, -50%) scale(.82); pointer-events: none; transition: opacity .25s ease, transform .35s cubic-bezier(.2,.75,.2,1); }
+    .message.success, .message.error { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    .message.success { color: var(--success); border-color: color-mix(in srgb, var(--success) 55%, var(--border)); } .message.error { color: var(--danger); border-color: color-mix(in srgb, var(--danger) 55%, var(--border)); }
+    .confetti { pointer-events: none; position: absolute; inset: 0; overflow: hidden; }
+    .confetti i { position: absolute; width: 10px; height: 18px; top: 38%; opacity: 0; background: var(--accent); animation: confettiFall 1.35s ease-out forwards; }
+    .confetti i:nth-child(3n) { background: var(--success); } .confetti i:nth-child(4n) { background: var(--warning); }
+    .confetti i:nth-child(odd) { width: 7px; height: 13px; }
+    @keyframes safeShake { 0%,100% { transform: translateX(0) rotate(0); } 20% { transform: translateX(-11px) rotate(-2deg); } 40% { transform: translateX(10px) rotate(2deg); } 60% { transform: translateX(-7px) rotate(-1deg); } 80% { transform: translateX(6px) rotate(1deg); } }
+    @keyframes safeOpen { 0% { transform: scale(.94) rotate(-1deg); } 55% { transform: scale(1.04) rotate(1deg); } 100% { transform: scale(1) rotate(0); } }
+    @keyframes confettiFall { 0% { opacity: 1; transform: translate(0,0) rotate(0); } 100% { opacity: 0; transform: translate(var(--x), 280px) rotate(560deg); } }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+    [hidden] { display: none !important; }
+    @media (max-width: 800px) {
+      .setup-grid, .game-layout { grid-template-columns: 1fr; }
+      .challenge-list { max-height: none; }
+      .safe-panel { min-height: 0; }
+    }
+    @media (max-width: 520px) {
+      .app-shell { width: min(100% - 20px, 1120px); padding-top: 17px; }
+      .topbar, .game-header { align-items: stretch; flex-direction: column; }
+      .toolbar, .game-tools { justify-content: stretch; }
+      .toolbar > *, .game-tools > * { flex: 1; }
+      .panel-body, .clues-panel, .safe-panel { padding: 19px; }
+      .editor-grid { grid-template-columns: 1fr; }
+      .editor-grid .wide { grid-column: auto; }
+      .theme-list { grid-template-columns: 1fr; }
+      .setup-actions > * { flex: 1; }
+      .safe-wrap { width: min(310px, 86vw); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    }
+    :fullscreen { background: var(--bg); }
+    :fullscreen .app-shell { width: min(1480px, calc(100% - 72px)); padding-top: 42px; }
+    :fullscreen .game-header h2 { font-size: clamp(28px, 4vw, 48px); }
+    :fullscreen .clues-panel ul { font-size: clamp(20px, 2.2vw, 30px); }
+    :fullscreen .safe-wrap { width: min(480px, 38vw); }
+    :fullscreen .display, :fullscreen .keypad { width: min(480px, 38vw); }
+    :fullscreen .key { min-height: 72px; font-size: 30px; }
+  </style>
+</head>
+<body data-theme="dark" data-font="system">
+  <main class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">🔒</div>
+        <div>
+          <h1>الخزنة السرية</h1>
+          <p>لعبة التفكير الرياضي التفاعلية</p>
+        </div>
+      </div>
+      <div class="toolbar">
+        <button class="icon-btn" id="soundToggle" type="button" aria-pressed="true">🔊 الصوت: مفعّل</button>
+        <button class="icon-btn" id="fullscreenBtn" type="button">⛶ ملء الشاشة</button>
+      </div>
+    </header>
+
+    <section class="setup-screen" id="setupScreen" aria-labelledby="setupTitle">
+      <div class="setup-grid">
+        <article class="panel">
+          <div class="panel-body">
+            <div class="panel-title">
+              <div>
+                <p class="eyebrow">لوحة المعلم</p>
+                <h2 id="setupTitle">جهّز تحدي اليوم</h2>
+                <p>اختر تحدياً، ثم اضبط مظهر اللعبة قبل عرضه على التلاميذ.</p>
+              </div>
+              <span aria-hidden="true" style="font-size:38px">🧠</span>
+            </div>
+
+            <div class="settings-section">
+              <h3>المظهر</h3>
+              <div class="theme-list" role="radiogroup" aria-label="اختيار المظهر">
+                <button class="theme-option selected" type="button" data-theme-choice="dark" role="radio" aria-checked="true"><span class="theme-swatch swatch-dark"></span><span><strong>ليلي</strong><small>مريح للعين</small></span></button>
+                <button class="theme-option" type="button" data-theme-choice="light" role="radio" aria-checked="false"><span class="theme-swatch swatch-light"></span><span><strong>نهاري</strong><small>واضح ومضيء</small></span></button>
+                <button class="theme-option" type="button" data-theme-choice="ocean" role="radio" aria-checked="false"><span class="theme-swatch swatch-ocean"></span><span><strong>المحيط</strong><small>أزرق تعليمي</small></span></button>
+                <button class="theme-option" type="button" data-theme-choice="forest" role="radio" aria-checked="false"><span class="theme-swatch swatch-forest"></span><span><strong>الغابة</strong><small>أخضر هادئ</small></span></button>
+                <button class="theme-option" type="button" data-theme-choice="royal" role="radio" aria-checked="false"><span class="theme-swatch swatch-royal"></span><span><strong>ملكي</strong><small>أزرق بنفسجي</small></span></button>
+              </div>
+            </div>
+
+            <div class="settings-section">
+              <label for="fontSelect">الخط العربي</label>
+              <select id="fontSelect">
+                <option value="system">خط النظام</option>
+                <option value="cairo">Cairo</option>
+                <option value="tajawal">Tajawal</option>
+                <option value="kufi">Noto Kufi Arabic</option>
+              </select>
+              <p class="hint">تُستخدم الخطوط الموجودة على جهاز العرض، مع بديل واضح إذا لم يكن الخط مثبتاً.</p>
+            </div>
+
+            <div class="setup-actions">
+              <button class="primary-btn" id="startBtn" type="button">▶ ابدأ التحدي</button>
+              <button class="secondary-btn" id="newChallengeBtn" type="button">＋ تحدٍ جديد</button>
+            </div>
+
+            <form class="editor" id="editor" hidden>
+              <div class="panel-title"><div><h2 id="editorTitle">إضافة تحدٍ</h2><p>اكتب كل دليل في سطر مستقل.</p></div></div>
+              <div class="editor-grid">
+                <div class="wide"><label for="challengeTitle">عنوان التحدي</label><input id="challengeTitle" required maxlength="90" placeholder="مثال: مغامرة العدد السري"></div>
+                <div class="wide"><label for="challengeIntro">الجملة التعريفية</label><input id="challengeIntro" maxlength="150" placeholder="استخدم مهاراتك في التفكير الرياضي!"></div>
+                <div><label for="challengeCode">الرمز الصحيح (5 أرقام)</label><input id="challengeCode" inputmode="numeric" maxlength="5" required placeholder="مثال: 24530"></div>
+                <div class="wide"><label for="challengeClues">الأدلة الرياضية</label><textarea id="challengeClues" required placeholder="عشرات الآلاف = 2&#10;آحاد الآلاف = ضعف عشرات الآلاف"></textarea></div>
+              </div>
+              <div class="editor-actions"><button class="primary-btn" type="submit">حفظ التحدي</button><button class="secondary-btn" id="cancelEditorBtn" type="button">إلغاء</button></div>
+            </form>
+          </div>
+        </article>
+
+        <aside class="panel">
+          <div class="panel-body">
+            <div class="panel-title"><div><p class="eyebrow">التحديات المحفوظة</p><h2>اختر تحدياً</h2></div><span aria-hidden="true" style="font-size:32px">📋</span></div>
+            <div class="challenge-list" id="challengeList"></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="game-screen" id="gameScreen" aria-labelledby="gameTitle">
+      <div class="game-header">
+        <div><p class="eyebrow">التحدي الحالي</p><h2 id="gameTitle"></h2><p id="gameIntro"></p></div>
+        <div class="game-tools"><button class="secondary-btn" id="backBtn" type="button">↩ لوحة المعلم</button><button class="secondary-btn" id="newRoundBtn" type="button">↻ جولة جديدة</button></div>
+      </div>
+      <div class="game-layout">
+        <article class="panel clues-panel">
+          <h3>📋 أدلة الرمز السري</h3>
+          <ul id="gameClues"></ul>
+        </article>
+        <article class="panel safe-panel" id="safePanel">
+          <div class="safe-wrap"><div class="safe-art" id="safeArt" role="img" aria-label="خزنة مغلقة"><img class="safe-closed" src="safe-closed.svg" alt=""><img class="safe-open" src="safe-open.svg" alt=""></div></div>
+          <div class="display" id="display" aria-live="polite">_ _ _ _ _</div>
+          <div class="keypad" aria-label="لوحة الأرقام">
+            <button class="key" type="button" data-number="1">1</button><button class="key" type="button" data-number="2">2</button><button class="key" type="button" data-number="3">3</button>
+            <button class="key" type="button" data-number="4">4</button><button class="key" type="button" data-number="5">5</button><button class="key" type="button" data-number="6">6</button>
+            <button class="key" type="button" data-number="7">7</button><button class="key" type="button" data-number="8">8</button><button class="key" type="button" data-number="9">9</button>
+            <button class="key clear" type="button" id="clearBtn">مسح</button><button class="key" type="button" data-number="0">0</button><button class="key enter" type="button" id="enterBtn">🔓 فتح الخزنة</button>
+          </div>
+          <div class="message" id="message" aria-live="assertive"></div>
+          <div class="confetti" id="confetti" aria-hidden="true"></div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      const CHALLENGES_KEY = "secretSafeChallengesV1";
+      const SETTINGS_KEY = "secretSafeSettingsV1";
+      const defaultChallenge = { id: "default-24530", title: "تحدي فتح الخزنة السرية", intro: "استخدم مهاراتك في التفكير الرياضي لاكتشاف الرمز الخماسي!", code: "24530", clues: ["عشرات الآلاف = 2", "آحاد الآلاف = ضعف عشرات الآلاف", "المئات = أكبر رقم فردي أصغر من 7", "العشرات = 3", "الآحاد = الصفر الحارس للمرتبة"] };
+      const $ = (id) => document.getElementById(id);
+      const arabicDigits = "٠١٢٣٤٥٦٧٨٩";
+      let challenges = loadChallenges();
+      let settings = loadSettings();
+      let selectedId = challenges[0]?.id;
+      let editingId = null;
+      let currentInput = "";
+      let currentChallenge = null;
+      let soundOn = settings.sound !== false;
+
+      function loadChallenges() {
+        try { const saved = JSON.parse(localStorage.getItem(CHALLENGES_KEY)); if (Array.isArray(saved) && saved.length) return saved; } catch (_) {}
+        const initial = [defaultChallenge]; try { localStorage.setItem(CHALLENGES_KEY, JSON.stringify(initial)); } catch (_) {} return initial;
+      }
+      function loadSettings() {
+        try { return { theme: "dark", font: "system", sound: true, ...JSON.parse(localStorage.getItem(SETTINGS_KEY) || "{}") }; } catch (_) { return { theme: "dark", font: "system", sound: true }; }
+      }
+      function saveSettings() { try { localStorage.setItem(SETTINGS_KEY, JSON.stringify({ theme: settings.theme, font: settings.font, sound: soundOn })); } catch (_) {} }
+      function saveChallenges() { try { localStorage.setItem(CHALLENGES_KEY, JSON.stringify(challenges)); } catch (_) {} }
+      function toWesternDigits(value) { return String(value || "").replace(/[٠-٩]/g, d => String(arabicDigits.indexOf(d))).replace(/[^0-9]/g, ""); }
+      function applySettings() {
+        document.body.dataset.theme = settings.theme;
+        document.body.dataset.font = settings.font;
+        $("fontSelect").value = settings.font;
+        document.querySelectorAll("[data-theme-choice]").forEach(btn => { const active = btn.dataset.themeChoice === settings.theme; btn.classList.toggle("selected", active); btn.setAttribute("aria-checked", String(active)); });
+        $("soundToggle").textContent = soundOn ? "🔊 الصوت: مفعّل" : "🔇 الصوت: متوقف";
+        $("soundToggle").setAttribute("aria-pressed", String(soundOn));
+        saveSettings();
+      }
+      function renderChallenges() {
+        const list = $("challengeList"); list.innerHTML = "";
+        if (!challenges.length) { list.innerHTML = '<div class="empty-state">لا توجد تحديات. أضف تحدياً جديداً للبدء.</div>'; $("startBtn").disabled = true; return; }
+        $("startBtn").disabled = false;
+        if (!challenges.some(c => c.id === selectedId)) selectedId = challenges[0].id;
+        challenges.forEach(challenge => {
+          const card = document.createElement("div"); card.className = "challenge-card" + (challenge.id === selectedId ? " selected" : ""); card.tabIndex = 0; card.setAttribute("role", "button"); card.setAttribute("aria-pressed", String(challenge.id === selectedId));
+          const info = document.createElement("div"); info.className = "card-info"; const title = document.createElement("strong"); title.textContent = challenge.title; const meta = document.createElement("small"); meta.textContent = `${challenge.clues.length} أدلة • رمز من 5 أرقام`; info.append(title, meta);
+          const actions = document.createElement("div"); actions.className = "card-actions";
+          const edit = document.createElement("button"); edit.className = "mini-btn"; edit.type = "button"; edit.title = "تعديل"; edit.textContent = "✎"; edit.addEventListener("click", e => { e.stopPropagation(); openEditor(challenge.id); });
+          const remove = document.createElement("button"); remove.className = "mini-btn"; remove.type = "button"; remove.title = "حذف"; remove.textContent = "🗑"; remove.addEventListener("click", e => { e.stopPropagation(); removeChallenge(challenge.id); });
+          actions.append(edit, remove); card.append(info, actions); card.addEventListener("click", () => { selectedId = challenge.id; renderChallenges(); }); card.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); selectedId = challenge.id; renderChallenges(); } }); list.append(card);
+        });
+      }
+      function openEditor(id = null) {
+        editingId = id; const challenge = id ? challenges.find(c => c.id === id) : null; $("editor").hidden = false; $("editorTitle").textContent = challenge ? "تعديل التحدي" : "إضافة تحدٍ";
+        $("challengeTitle").value = challenge?.title || ""; $("challengeIntro").value = challenge?.intro || ""; $("challengeCode").value = challenge?.code || ""; $("challengeClues").value = challenge?.clues?.join("\n") || ""; $("challengeTitle").focus();
+      }
+      function closeEditor() { editingId = null; $("editor").hidden = true; $("editor").reset(); }
+      function removeChallenge(id) {
+        const challenge = challenges.find(c => c.id === id); if (!challenge) return;
+        if (challenges.length === 1) { alert("يجب الاحتفاظ بتحدٍ واحد على الأقل."); return; }
+        if (!window.confirm(`هل تريد حذف «${challenge.title}»؟`)) return;
+        challenges = challenges.filter(c => c.id !== id); if (selectedId === id) selectedId = challenges[0].id; saveChallenges(); renderChallenges();
+      }
+      function startGame() {
+        currentChallenge = challenges.find(c => c.id === selectedId) || challenges[0]; if (!currentChallenge) return;
+        $("setupScreen").hidden = true; $("gameScreen").style.display = "block"; $("gameTitle").textContent = currentChallenge.title; $("gameIntro").textContent = currentChallenge.intro || "استخدم مهاراتك في التفكير الرياضي!";
+        $("gameClues").innerHTML = ""; currentChallenge.clues.forEach(clue => { const li = document.createElement("li"); li.textContent = clue; $("gameClues").append(li); }); resetRound();
+      }
+      function showSetup() { $("gameScreen").style.display = "none"; $("setupScreen").hidden = false; }
+      function resetRound() { currentInput = ""; $("safeArt").className = "safe-art"; $("safeArt").setAttribute("aria-label", "خزنة مغلقة"); $("message").className = "message"; $("message").textContent = ""; $("confetti").innerHTML = ""; updateDisplay(); }
+      function updateDisplay() { const shown = (currentInput + "_____" ).slice(0, 5).split("").join(" "); $("display").textContent = shown; }
+      function press(number) { if (currentInput.length >= 5 || $("safeArt").classList.contains("is-open")) return; currentInput += number; updateDisplay(); }
+      function clearCode() { if ($("safeArt").classList.contains("is-open")) return; currentInput = ""; $("message").className = "message"; $("message").textContent = ""; updateDisplay(); }
+      function playTone(type) {
+        if (!soundOn) return;
+        try {
+          const AudioContext = window.AudioContext || window.webkitAudioContext; if (!AudioContext) return; const ctx = new AudioContext(); const now = ctx.currentTime;
+          const notes = type === "success" ? [523, 659, 784, 1047] : [220, 165]; const duration = type === "success" ? .14 : .22;
+          notes.forEach((freq, index) => { const osc = ctx.createOscillator(); const gain = ctx.createGain(); osc.type = type === "success" ? "sine" : "sawtooth"; osc.frequency.value = freq; gain.gain.setValueAtTime(.0001, now + index * duration); gain.gain.exponentialRampToValueAtTime(type === "success" ? .16 : .09, now + index * duration + .02); gain.gain.exponentialRampToValueAtTime(.0001, now + index * duration + duration); osc.connect(gain); gain.connect(ctx.destination); osc.start(now + index * duration); osc.stop(now + index * duration + duration + .02); });
+          setTimeout(() => ctx.close(), 900);
+        } catch (_) {}
+      }
+      function celebrate() {
+        const confetti = $("confetti"); confetti.innerHTML = ""; for (let i = 0; i < 30; i++) { const piece = document.createElement("i"); piece.style.right = `${40 + Math.random() * 20}%`; piece.style.setProperty("--x", `${(Math.random() - .5) * 460}px`); piece.style.animationDelay = `${Math.random() * .18}s`; confetti.append(piece); }
+      }
+      function checkCode() {
+        const message = $("message"); if (currentInput.length !== 5) { message.className = "message error"; message.textContent = "⚠️ أدخل عدداً مكوّناً من 5 أرقام أولاً."; playTone("failure"); return; }
+        if (currentInput === currentChallenge.code) { $("safeArt").className = "safe-art is-open"; $("safeArt").setAttribute("aria-label", "خزنة مفتوحة"); message.className = "message success"; message.textContent = `🎉 أحسنت! أنت بطل الرياضيات! الرمز الصحيح هو ${currentChallenge.code}`; celebrate(); playTone("success"); }
+        else { $("safeArt").className = "safe-art failure"; message.className = "message error"; message.textContent = "😄 أوه! الخزنة تضحك… راجع الأدلة وحاول مرة أخرى!"; playTone("failure"); setTimeout(() => $("safeArt").classList.remove("failure"), 600); }
+      }
+      $("fontSelect").addEventListener("change", e => { settings.font = e.target.value; applySettings(); });
+      document.querySelectorAll("[data-theme-choice]").forEach(btn => btn.addEventListener("click", () => { settings.theme = btn.dataset.themeChoice; applySettings(); }));
+      $("soundToggle").addEventListener("click", () => { soundOn = !soundOn; applySettings(); });
+      $("fullscreenBtn").addEventListener("click", async () => { try { if (!document.fullscreenElement) await document.documentElement.requestFullscreen(); else await document.exitFullscreen(); } catch (_) {} });
+      $("startBtn").addEventListener("click", startGame); $("backBtn").addEventListener("click", showSetup); $("newRoundBtn").addEventListener("click", resetRound); $("clearBtn").addEventListener("click", clearCode); $("enterBtn").addEventListener("click", checkCode);
+      document.querySelectorAll("[data-number]").forEach(btn => btn.addEventListener("click", () => press(btn.dataset.number)));
+      document.addEventListener("keydown", e => { if ($("gameScreen").style.display !== "block") return; if (/^[0-9]$/.test(e.key)) press(e.key); else if (e.key === "Enter") checkCode(); else if (e.key === "Backspace") { currentInput = currentInput.slice(0, -1); updateDisplay(); } else if (e.key === "Escape") clearCode(); });
+      $("newChallengeBtn").addEventListener("click", () => openEditor()); $("cancelEditorBtn").addEventListener("click", closeEditor);
+      $("editor").addEventListener("submit", e => { e.preventDefault(); const code = toWesternDigits($("challengeCode").value); const clues = $("challengeClues").value.split(/\r?\n/).map(line => line.trim()).filter(Boolean); if (code.length !== 5 || clues.length === 0) { alert("تأكد من إدخال رمز من 5 أرقام ودليل واحد على الأقل."); return; } const item = { id: editingId || `challenge-${Date.now()}`, title: $("challengeTitle").value.trim(), intro: $("challengeIntro").value.trim() || "استخدم مهاراتك في التفكير الرياضي!", code, clues }; if (!item.title) { alert("اكتب عنوان التحدي."); return; } if (editingId) challenges = challenges.map(c => c.id === editingId ? item : c); else { challenges.push(item); selectedId = item.id; } saveChallenges(); renderChallenges(); closeEditor(); });
+      applySettings(); renderChallenges();
+    })();
+  </script>
+</body>
+</html>
